@@ -7,8 +7,17 @@
 };
 /* You can add global styles to this file, and also import other style files */
 
+html {
+  font-size: 14px;
+}
+
 body {
   width: 400px;
   height: 100% !important;
-  max-height: 600px !important;
+  max-height: 500px !important;
+  margin: 0;
+}
+
+nb-layout-column {
+  padding: 10px !important;
 }
