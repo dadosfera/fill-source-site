@@ -10,6 +10,11 @@ interface Credentials {
 export interface Source {
   plugin: string;
   credentials: Credentials;
-  ownerId: string;
+}
+
+export interface SourceFirebase {
+  plugin: string;
+  credentials: string;
+  uid: string;
   favorited: boolean;
 }

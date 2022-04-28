@@ -34,6 +34,8 @@ import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { DisplayNamePipe } from './pipes/display-name/display-name.pipe';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { DisplayNamePipe } from './pipes/display-name/display-name.pipe';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
 
     // Nebular
     NbThemeModule.forRoot({ name: 'default' }),
@@ -74,7 +78,7 @@ import { DisplayNamePipe } from './pipes/display-name/display-name.pipe';
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),
   ],
-  providers: [],
+  providers: [{ provide: FIREBASE_OPTIONS, useValue: environment.firebase }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
