@@ -1,0 +1,18 @@
+{
+  "extends": [
+    "stylelint-config-standard-scss",
+    "stylelint-config-prettier-scss",
+    "stylelint-rscss/config"
+  ],
+  "rules": {
+    "selector-class-pattern": null
+  },
+  "ignoreFiles": [
+    "src/styles/styles.scss",
+    "src/styles/antd.scss",
+    "src/styles/context-menus.scss",
+    "src/styles/select.scss",
+    "src/styles/stepper.scss",
+    "src/styles/checkbox.scss"
+  ]
+}
