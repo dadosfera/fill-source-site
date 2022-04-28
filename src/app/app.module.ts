@@ -22,6 +22,7 @@ import {
   NbToastrModule,
   NbToggleModule,
   NbTooltipModule,
+  NbActionsModule,
 } from '@beast/theme';
 import { NbEvaIconsModule } from '@beast/eva-icons';
 import { LoginComponent } from './pages/login/login.component';
@@ -32,6 +33,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideDatabase, getDatabase } from '@angular/fire/database';
+import { DisplayNamePipe } from './pipes/display-name/display-name.pipe';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { provideDatabase, getDatabase } from '@angular/fire/database';
     HomeComponent,
     CreateComponent,
     EditComponent,
+    DisplayNamePipe,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +68,8 @@ import { provideDatabase, getDatabase } from '@angular/fire/database';
     NbCheckboxModule,
     NbTabsetModule,
     NbToggleModule,
+    NbActionsModule,
+
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),

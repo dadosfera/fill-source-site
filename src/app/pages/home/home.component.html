@@ -1,1 +1,40 @@
-<p>home works!</p>
+<nb-layout>
+  <nb-layout-column>
+    <nb-card>
+      <nb-card-body>
+        <div class="header-block">
+          <p>
+            Olá<span class="user-name"
+              >, {{ auth.user?.displayName | displayName }}</span
+            >!
+          </p>
+
+          <nb-actions size="small">
+            <nb-action
+              (click)="goToCreate()"
+              nbTooltip="Criar novo source"
+              icon="plus-circle-outline"
+            ></nb-action>
+            <nb-action
+              (click)="auth.logout()"
+              nbTooltip="Fazer logout"
+              icon="log-out-outline"
+            ></nb-action>
+          </nb-actions>
+        </div>
+
+        <div class="search-block">
+          <nb-form-field>
+            <nb-icon nbPrefix icon="search"></nb-icon>
+            <input
+              type="text"
+              nbInput
+              fullWidth
+              placeholder="Pesquisar sources cadastradas"
+            />
+          </nb-form-field>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-layout-column>
+</nb-layout>

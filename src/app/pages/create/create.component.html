@@ -1,1 +1,29 @@
-<p>create works!</p>
+<nb-layout>
+  <nb-layout-column>
+    <nb-card>
+      <nb-card-body>
+        <div class="header-block">
+          <nb-actions size="small">
+            <nb-action
+              nbTooltip="Voltar"
+              icon="arrow-ios-back-outline"
+            ></nb-action>
+          </nb-actions>
+          <p>Criar novo source</p>
+        </div>
+
+        <div class="search-block">
+          <nb-form-field>
+            <nb-icon nbPrefix icon="search"></nb-icon>
+            <input
+              type="text"
+              nbInput
+              fullWidth
+              placeholder="Pesquisar sources cadastradas"
+            />
+          </nb-form-field>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-layout-column>
+</nb-layout>
