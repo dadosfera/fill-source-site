@@ -4,18 +4,70 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule } from '@beast/theme';
+import {
+  NbThemeModule,
+  NbLayoutModule,
+  NbAutocompleteModule,
+  NbBadgeModule,
+  NbButtonModule,
+  NbCardModule,
+  NbCheckboxModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbInputModule,
+  NbSelectModule,
+  NbSpinnerModule,
+  NbTabsetModule,
+  NbTagModule,
+  NbToastrModule,
+  NbToggleModule,
+  NbTooltipModule,
+} from '@beast/theme';
 import { NbEvaIconsModule } from '@beast/eva-icons';
+import { LoginComponent } from './pages/login/login.component';
+import { HomeComponent } from './pages/home/home.component';
+import { CreateComponent } from './pages/create/create.component';
+import { EditComponent } from './pages/edit/edit.component';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideDatabase, getDatabase } from '@angular/fire/database';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    HomeComponent,
+    CreateComponent,
+    EditComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+
+    // Nebular
     NbThemeModule.forRoot({ name: 'default' }),
     NbLayoutModule,
     NbEvaIconsModule,
+    NbToastrModule.forRoot(),
+    NbInputModule,
+    NbButtonModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbCardModule,
+    NbTooltipModule,
+    NbFormFieldModule,
+    NbBadgeModule,
+    NbTagModule,
+    NbAutocompleteModule,
+    NbSelectModule,
+    NbCheckboxModule,
+    NbTabsetModule,
+    NbToggleModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideDatabase(() => getDatabase()),
   ],
   providers: [],
   bootstrap: [AppComponent],

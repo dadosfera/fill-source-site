@@ -52,3 +52,8 @@ Thumbs.db
 # Pipfiles
 
 *.pem
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json
