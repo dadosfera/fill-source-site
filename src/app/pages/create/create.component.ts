@@ -59,6 +59,7 @@ export class CreateComponent {
       this.form.reset();
       this.goBack();
     } catch (error) {
+      console.log(error);
       this.toastService.danger('Ocorreu um erro ao salvar o dado!', 'Ops!');
     } finally {
       this.savingSource = false;

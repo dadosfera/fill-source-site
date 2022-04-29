@@ -34,5 +34,18 @@
     </div>
   </nb-card-header>
 
-  <nb-card-body> </nb-card-body>
+  <nb-card-body [nbSpinner]="loading">
+    <div *ngIf="allSources && allSources.length">
+      <ul>
+        <li *ngFor="let item of allSources">
+          {{ item?.name }}
+          <code>{{ item?.key }}</code>
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="allSources.length === 0 && !loading">
+      No results, try clearing filters
+    </div>
+  </nb-card-body>
 </nb-card>

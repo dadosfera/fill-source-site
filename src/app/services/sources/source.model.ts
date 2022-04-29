@@ -13,8 +13,13 @@ export interface Source {
 }
 
 export interface SourceFirebase {
+  name: string;
   plugin: string;
   credentials: string;
   uid: string;
   favorited: boolean;
+}
+
+export interface SourceFirebaseKey extends SourceFirebase {
+  key?: string | null;
 }
