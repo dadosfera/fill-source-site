@@ -29,6 +29,7 @@
           nbInput
           fullWidth
           placeholder="Pesquisar sources cadastradas"
+          [formControl]="searchControl"
           [disabled]="loading"
         />
       </nb-form-field>
@@ -37,7 +38,7 @@
 
   <div class="list-block">
     <nb-list *ngIf="allSources && allSources.length">
-      <nb-list-item *ngFor="let item of allSources">
+      <nb-list-item *ngFor="let item of filteredSources">
         <div class="list-item">
           <div class="_flex _flex-column _align-items _justify-center">
             <p class="paragraph _bold _no-margin">
@@ -79,6 +80,14 @@
       </nb-list-item>
     </nb-list>
   </div>
+
+  <nb-card-body
+    *ngIf="filteredSources && filteredSources.length === 0 && !loading"
+  >
+    <div class="no-data-block">
+      <p id="text" class="p1">Sem itens para o termo de busca</p>
+    </div>
+  </nb-card-body>
 
   <nb-card-body *ngIf="allSources.length === 0 && !loading">
     <div class="no-data-block">

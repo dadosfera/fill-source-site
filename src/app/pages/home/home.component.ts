@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NbToastrService } from '@beast/theme';
-import { Subscription } from 'rxjs';
+import { map, Observable, of, startWith, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { SourceFirebaseKey } from 'src/app/services/sources/source.model';
 import { SourcesService } from 'src/app/services/sources/sources.service';
@@ -15,10 +16,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   loading = true;
 
   allSources: SourceFirebaseKey[] = [];
+  filteredSources: SourceFirebaseKey[] = [];
 
   sourcesSubscription: Subscription;
 
   expanded: string[] = [];
+
+  searchControl = new FormControl('');
 
   constructor(
     public auth: AuthService,
@@ -38,12 +42,17 @@ export class HomeComponent implements OnInit, OnDestroy {
           } as SourceFirebaseKey;
           return obj;
         });
+        this.filteredSources = this.allSources;
         this.loading = false;
       },
       error: () => {
         this.toastService.danger('Ocorreu um erro ao carregar', 'Ops!');
         this.loading = false;
       },
+    });
+
+    this.searchControl.valueChanges.pipe(startWith('')).subscribe((value) => {
+      this.filteredSources = this.filter(value);
     });
   }
 
@@ -62,6 +71,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   deleteSource(key: string) {
     this.sources.delete(key);
+  }
+
+  private filter(value: string): SourceFirebaseKey[] {
+    return this.allSources.filter(
+      (source) =>
+        source.name.toLowerCase().includes(value.toLowerCase()) ||
+        source.plugin.includes(value.toLowerCase())
+    );
   }
 
   ngOnDestroy(): void {
