@@ -8,7 +8,7 @@
     "512": "android-chrome-512x512.png"
   },
   "manifest_version": 3,
-  "browser_action": {
+  "action": {
     "default_title": "Fill Source",
     "default_icon": {
       "16": "favicon-16x16.png",
