@@ -3,18 +3,10 @@
   "short_name": "Fill Source",
   "version": "1.0",
   "description": "Fill Source Inputs for Dadosfera Testing Purposes",
-  "icons": [
-    {
-      "src": "/android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/android-chrome-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ],
+  "icons": {
+    "192": "android-chrome-192x192.png",
+    "512": "android-chrome-512x512.png"
+  },
   "theme_color": "#1700A2",
   "background_color": "#ffffff",
   "display": "standalone",
@@ -22,8 +14,8 @@
   "browser_action": {
     "default_title": "Fill Source",
     "default_icon": {
-      "16": "/favicon-16x16.png",
-      "32": "/favicon-32x32.png"
+      "16": "favicon-16x16.png",
+      "32": "favicon-32x32.png"
     },
     "default_popup": "index.html"
   }
