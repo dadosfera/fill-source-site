@@ -1,4 +1,4 @@
-interface Credentials {
+export interface Credentials {
   database: string;
   endpoint: string;
   port: number;

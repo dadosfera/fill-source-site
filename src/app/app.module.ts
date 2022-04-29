@@ -37,6 +37,7 @@ import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { DisplayNamePipe } from './pipes/display-name/display-name.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { CredentialsViewComponent } from './components/credentials-view/credentials-view.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
     CreateComponent,
     EditComponent,
     DisplayNamePipe,
+    CredentialsViewComponent,
   ],
   imports: [
     BrowserModule,

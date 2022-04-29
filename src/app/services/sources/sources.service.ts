@@ -24,6 +24,10 @@ export class SourcesService {
     return this.sourcesList.push(source);
   }
 
+  delete(key: string) {
+    return this.sourcesList.remove(key);
+  }
+
   get() {
     return this.sourcesList.snapshotChanges();
   }

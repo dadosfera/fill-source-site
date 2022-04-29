@@ -53,3 +53,39 @@ button {
     margin-right: 16px;
   }
 }
+
+nb-list-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-item {
+  min-height: 60px;
+  display: flex;
+      justify-content: space-between;
+      width: 100%;
+}
+
+._bold {
+  font-weight: 700;
+}
+
+._no-margin {
+  margin: 0;
+}
+
+._flex {
+  display: flex;
+}
+
+._flex-column {
+  flex-direction: column;
+}
+
+._align-center {
+  align-items: center;
+}
+
+._justify-center {
+  justify-content: center;
+}

@@ -18,6 +18,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   sourcesSubscription: Subscription;
 
+  expanded: string[] = [];
+
   constructor(
     public auth: AuthService,
     private router: Router,
@@ -47,6 +49,19 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   goToCreate() {
     this.router.navigate(['/create']);
+  }
+
+  toggleExpanded(key: string) {
+    if (this.expanded.includes(key)) {
+      this.expanded = this.expanded.filter((e) => e !== key);
+      return;
+    }
+
+    this.expanded.push(key);
+  }
+
+  deleteSource(key: string) {
+    this.sources.delete(key);
   }
 
   ngOnDestroy(): void {
