@@ -1,4 +1,4 @@
-<nb-card>
+<nb-card [nbSpinner]="loading">
   <nb-card-header>
     <div class="header-block">
       <p>
@@ -29,23 +29,39 @@
           nbInput
           fullWidth
           placeholder="Pesquisar sources cadastradas"
+          [disabled]="loading"
         />
       </nb-form-field>
     </div>
   </nb-card-header>
 
-  <nb-card-body [nbSpinner]="loading">
-    <div *ngIf="allSources && allSources.length">
-      <ul>
-        <li *ngFor="let item of allSources">
-          {{ item?.name }}
-          <code>{{ item?.key }}</code>
-        </li>
-      </ul>
-    </div>
+  <div class="list-block">
+    <nb-list *ngIf="allSources && allSources.length">
+      <nb-list-item *ngFor="let item of allSources">
+        {{ item?.name }}
+        <code>{{ item?.key }}</code>
+      </nb-list-item>
+    </nb-list>
+  </div>
 
-    <div *ngIf="allSources.length === 0 && !loading">
-      No results, try clearing filters
+  <nb-card-body *ngIf="allSources.length === 0 && !loading">
+    <div class="no-data-block">
+      <h1 id="title" class="h4">Lista vazia</h1>
+
+      <p id="text" class="p1">
+        Crie seu primeiro source para começar a economizar tempo
+      </p>
+
+      <button
+        nbButton
+        status="success"
+        size="large"
+        (click)="goToCreate()"
+        id="newItem"
+      >
+        <nb-icon icon="plus-circle"></nb-icon>
+        Criar novo source
+      </button>
     </div>
   </nb-card-body>
 </nb-card>

@@ -23,6 +23,7 @@ import {
   NbToggleModule,
   NbTooltipModule,
   NbActionsModule,
+  NbListModule,
 } from '@beast/theme';
 import { NbEvaIconsModule } from '@beast/eva-icons';
 import { LoginComponent } from './pages/login/login.component';
@@ -73,6 +74,7 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
     NbTabsetModule,
     NbToggleModule,
     NbActionsModule,
+    NbListModule,
 
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),

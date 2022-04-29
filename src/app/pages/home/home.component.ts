@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NbToastrService } from '@beast/theme';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { SourceFirebaseKey } from 'src/app/services/sources/source.model';
 import { SourcesService } from 'src/app/services/sources/sources.service';
@@ -10,10 +11,12 @@ import { SourcesService } from 'src/app/services/sources/sources.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   loading = true;
 
   allSources: SourceFirebaseKey[] = [];
+
+  sourcesSubscription: Subscription;
 
   constructor(
     public auth: AuthService,
@@ -24,7 +27,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.sources.get().subscribe({
+    this.sourcesSubscription = this.sources.get().subscribe({
       next: (values) => {
         this.allSources = values.map((val) => {
           const obj = {
@@ -44,5 +47,11 @@ export class HomeComponent implements OnInit {
 
   goToCreate() {
     this.router.navigate(['/create']);
+  }
+
+  ngOnDestroy(): void {
+    if (this.sourcesSubscription) {
+      this.sourcesSubscription.unsubscribe();
+    }
   }
 }

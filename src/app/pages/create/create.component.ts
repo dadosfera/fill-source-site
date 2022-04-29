@@ -44,7 +44,7 @@ export class CreateComponent {
     try {
       this.savingSource = true;
       const credentials = this.form.get('credentials')?.value;
-      const encrypt = this.encryptService.encrypt(credentials);
+      const encrypt = await this.encryptService.encrypt(credentials);
 
       const formValue: SourceFirebase = {
         ...this.form.value,

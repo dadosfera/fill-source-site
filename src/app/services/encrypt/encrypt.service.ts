@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
 import { AES, enc } from 'crypto-js';
-import hash from 'src/app/services/encrypt/hash';
+import hashDefault from 'src/app/services/encrypt/hash';
+import { KeysService } from '../keys/keys.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EncryptService {
-  constructor() {}
+  constructor(private keysService: KeysService) {}
 
-  encrypt(data: any) {
-    return AES.encrypt(JSON.stringify(data), hash).toString();
+  async encrypt(data: any) {
+    const hash = await this.keysService.get();
+    return AES.encrypt(JSON.stringify(data), hash || hashDefault).toString();
   }
 
-  decrypt(data: string) {
-    const aes = AES.decrypt(data, hash);
+  async decrypt(data: string) {
+    const hash = await this.keysService.get();
+    const aes = AES.decrypt(data, hash || hashDefault);
     return JSON.parse(aes.toString(enc.Utf8));
   }
 }
