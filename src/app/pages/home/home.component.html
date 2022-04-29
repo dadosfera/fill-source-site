@@ -2,8 +2,8 @@
   <nb-card-header>
     <div class="header-block">
       <p>
-        Olá<span class="user-name"
-          >, {{ auth.user?.displayName | displayName }}</span
+        Olá,
+        <span class="user-name">{{ auth.user?.displayName | displayName }}</span
         >!
       </p>
 
@@ -17,6 +17,7 @@
           (click)="auth.logout()"
           nbTooltip="Fazer logout"
           icon="log-out-outline"
+          class="last-action"
         ></nb-action>
       </nb-actions>
     </div>
