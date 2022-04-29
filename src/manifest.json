@@ -7,10 +7,7 @@
     "192": "android-chrome-192x192.png",
     "512": "android-chrome-512x512.png"
   },
-  "theme_color": "#1700A2",
-  "background_color": "#ffffff",
-  "display": "standalone",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "browser_action": {
     "default_title": "Fill Source",
     "default_icon": {
@@ -18,5 +15,6 @@
       "32": "favicon-32x32.png"
     },
     "default_popup": "index.html"
-  }
+  },
+  "offline_enabled": false
 }
