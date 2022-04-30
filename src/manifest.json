@@ -16,6 +16,10 @@
     },
     "default_popup": "index.html"
   },
+  "permissions": ["activeTab", "webNavigation"],
+  "background": {
+    "service_worker": "background.js"
+  },
   "offline_enabled": false,
   "content_security_policy": {
     "entension_pages": "script-src 'self'; object-src 'self'",
