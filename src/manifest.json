@@ -16,7 +16,7 @@
     },
     "default_popup": "index.html"
   },
-  "permissions": ["activeTab", "webNavigation"],
+  "permissions": ["activeTab", "webNavigation", "scripting"],
   "background": {
     "service_worker": "background.js"
   },

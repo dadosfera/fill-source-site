@@ -27,6 +27,7 @@
           fullWidth
           placeholder="Pesquisar sources cadastradas"
           [formControl]="searchControl"
+          id="input-test"
         />
       </nb-form-field>
     </div>
@@ -47,6 +48,7 @@
           <div class="_flex _align-items">
             <nb-actions size="small">
               <nb-action
+                (click)="sendMessage(item.credentials)"
                 nbTooltip="Preencher dados"
                 icon
                 icon="arrowhead-down-outline"

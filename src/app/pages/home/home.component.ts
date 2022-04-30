@@ -3,7 +3,11 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NbToastrService } from '@beast/theme';
 import { startWith } from 'rxjs';
-import { SourceDatabaseKey } from 'src/app/services/sources/source.model';
+import { EncryptService } from 'src/app/services/encrypt/encrypt.service';
+import {
+  Credentials,
+  SourceDatabaseKey,
+} from 'src/app/services/sources/source.model';
 import { SourcesService } from 'src/app/services/sources/sources.service';
 import { SupabaseService } from 'src/app/services/supabase/supabase.service';
 
@@ -27,6 +31,7 @@ export class HomeComponent implements OnInit {
     public supabaseService: SupabaseService,
     private router: Router,
     private sources: SourcesService,
+    private encryptService: EncryptService,
     private toastService: NbToastrService
   ) {}
 
@@ -84,6 +89,46 @@ export class HomeComponent implements OnInit {
     );
     this.deleting = false;
     this.toastService.success('Foi deletado com sucesso!', 'Source removido!');
+  }
+
+  async sendMessage(credentials: string) {
+    const decrypted: Credentials = await this.encryptService.decrypt(
+      credentials
+    );
+
+    chrome.tabs.query({ active: true, currentWindow: true }, ([{ id }]) => {
+      this.fillSources(id as number, decrypted);
+    });
+  }
+
+  fillSources(tabId: number, fillCredentials: any) {
+    return chrome.scripting.executeScript({
+      target: { tabId },
+      func: (credentials) => {
+        if (credentials) {
+          const KEY_TO_ID = {
+            jdbc_user: 'jdbc-user-fill',
+            jdbc_password: 'jdbc-password-fill',
+            database: 'database-fill',
+            schema: 'schema-fill',
+            endpoint: 'endpoint-fill',
+            port: 'port-fill',
+          } as any;
+
+          Object.entries(credentials).forEach(([key, value]) => {
+            if (KEY_TO_ID[key]) {
+              const input = document.getElementById(
+                KEY_TO_ID[key]
+              ) as HTMLInputElement;
+              if (input) {
+                input.value = value as string;
+              }
+            }
+          });
+        }
+      },
+      args: [fillCredentials],
+    });
   }
 
   private filter(value: string): SourceDatabaseKey[] {
