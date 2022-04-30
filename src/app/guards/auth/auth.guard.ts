@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, UrlTree } from '@angular/router';
-import { AuthService } from 'src/app/services/auth/auth.service';
+import { SupabaseService } from 'src/app/services/supabase/supabase.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService) {}
-  async canActivate(): Promise<boolean | UrlTree> {
-    const isLogged = await this.authService.isLoggedIn();
+  constructor(private supabaseService: SupabaseService) {}
+
+  canActivate(): boolean | UrlTree {
+    const isLogged = !!this.supabaseService.getSession();
 
     if (isLogged) {
       return true;
     }
 
-    this.authService.logout();
+    this.supabaseService.signOut();
     return false;
   }
 }

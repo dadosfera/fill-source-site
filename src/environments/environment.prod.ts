@@ -1,11 +1,7 @@
 export const environment = {
-  firebase: {
-    projectId: 'fill-source',
-    appId: '1:716510840470:web:e321afbb8674a9c73124b7',
-    storageBucket: 'fill-source.appspot.com',
-    apiKey: 'AIzaSyDC0Lqi4KLNLSBBKH60JmgfZAbR2-C5Vkc',
-    authDomain: 'fill-source.firebaseapp.com',
-    messagingSenderId: '716510840470',
+  supabase: {
+    url: 'https://muykszapaydjpncociqb.supabase.co',
+    key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11eWtzemFwYXlkanBuY29jaXFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTEyNjU4MjMsImV4cCI6MTk2Njg0MTgyM30.p5Mm33zDRKaFem17hrTivF-996887m50PuANsLaly_8',
   },
   production: true,
 };

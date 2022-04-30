@@ -1,11 +1,7 @@
 <nb-card [nbSpinner]="loading">
   <nb-card-header>
     <div class="header-block">
-      <p>
-        Olá,
-        <span class="user-name">{{ auth.user?.displayName | displayName }}</span
-        >!
-      </p>
+      <p>Olá!</p>
 
       <nb-actions size="small">
         <nb-action
@@ -14,7 +10,7 @@
           icon="plus-circle-outline"
         ></nb-action>
         <nb-action
-          (click)="auth.logout()"
+          (click)="supabaseService.signOut()"
           nbTooltip="Fazer logout"
           icon="log-out-outline"
           class="last-action"
@@ -56,18 +52,18 @@
                 icon="arrowhead-down-outline"
               ></nb-action>
               <nb-action
-                (click)="toggleExpanded(item?.key || '')"
+                (click)="toggleExpanded(item.id)"
                 nbTooltip="Ver credenciais"
                 [icon]="
-                  expanded.includes(item?.key || '')
-                    ? 'eye-off-outline'
-                    : 'eye-outline'
+                  expanded.includes(item.id) ? 'eye-off-outline' : 'eye-outline'
                 "
               ></nb-action>
               <nb-action
-                (click)="deleteSource(item?.key || '')"
+                (click)="deleteSource(item.id)"
                 nbTooltip="Deletar source"
                 icon="trash-outline"
+                [disabled]="deleting"
+                [nbSpinner]="deleting"
               ></nb-action>
             </nb-actions>
           </div>
@@ -75,7 +71,7 @@
 
         <app-credentials-view
           [credentials]="item?.credentials || ''"
-          *ngIf="expanded.includes(item?.key || '')"
+          *ngIf="expanded.includes(item.id)"
         ></app-credentials-view>
       </nb-list-item>
     </nb-list>

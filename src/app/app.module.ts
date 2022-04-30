@@ -30,13 +30,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { CreateComponent } from './pages/create/create.component';
 import { EditComponent } from './pages/edit/edit.component';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { environment } from '../environments/environment';
-import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { DisplayNamePipe } from './pipes/display-name/display-name.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { CredentialsViewComponent } from './components/credentials-view/credentials-view.component';
 
 @NgModule({
@@ -77,12 +72,7 @@ import { CredentialsViewComponent } from './components/credentials-view/credenti
     NbToggleModule,
     NbActionsModule,
     NbListModule,
-
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAuth(() => getAuth()),
-    provideDatabase(() => getDatabase()),
   ],
-  providers: [{ provide: FIREBASE_OPTIONS, useValue: environment.firebase }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

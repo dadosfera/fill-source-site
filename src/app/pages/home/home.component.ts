@@ -1,55 +1,54 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NbToastrService } from '@beast/theme';
-import { map, Observable, of, startWith, Subscription } from 'rxjs';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { SourceFirebaseKey } from 'src/app/services/sources/source.model';
+import { startWith } from 'rxjs';
+import { SourceDatabaseKey } from 'src/app/services/sources/source.model';
 import { SourcesService } from 'src/app/services/sources/sources.service';
+import { SupabaseService } from 'src/app/services/supabase/supabase.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
   loading = true;
+  deleting = false;
 
-  allSources: SourceFirebaseKey[] = [];
-  filteredSources: SourceFirebaseKey[] = [];
+  allSources: SourceDatabaseKey[] = [];
+  filteredSources: SourceDatabaseKey[] = [];
 
-  sourcesSubscription: Subscription;
-
-  expanded: string[] = [];
+  expanded: number[] = [];
 
   searchControl = new FormControl('');
 
   constructor(
-    public auth: AuthService,
+    public supabaseService: SupabaseService,
     private router: Router,
     private sources: SourcesService,
     private toastService: NbToastrService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.loading = true;
-    this.sourcesSubscription = this.sources.get().subscribe({
-      next: (values) => {
-        this.allSources = values.map((val) => {
-          const obj = {
-            ...val.payload.val(),
-            key: val.key,
-          } as SourceFirebaseKey;
-          return obj;
-        });
-        this.filteredSources = this.allSources;
-        this.loading = false;
-      },
-      error: () => {
-        this.toastService.danger('Ocorreu um erro ao carregar', 'Ops!');
-        this.loading = false;
-      },
-    });
+    const { error, data } = await this.sources.get();
+
+    if (error) {
+      this.toastService.danger(error.message, error.code);
+      this.loading = false;
+      return;
+    }
+
+    this.allSources = [...data];
+
+    if (this.searchControl.value) {
+      this.filteredSources = this.filter(this.searchControl.value);
+    } else {
+      this.filteredSources = [...data];
+    }
+
+    this.loading = false;
 
     this.searchControl.valueChanges.pipe(startWith('')).subscribe((value) => {
       this.filteredSources = this.filter(value);
@@ -60,30 +59,38 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['/create']);
   }
 
-  toggleExpanded(key: string) {
-    if (this.expanded.includes(key)) {
-      this.expanded = this.expanded.filter((e) => e !== key);
+  toggleExpanded(id: number) {
+    if (this.expanded.includes(id)) {
+      this.expanded = this.expanded.filter((e) => e !== id);
       return;
     }
 
-    this.expanded.push(key);
+    this.expanded.push(id);
   }
 
-  deleteSource(key: string) {
-    this.sources.delete(key);
+  async deleteSource(id: number) {
+    this.deleting = true;
+    const { error } = await this.sources.delete(id);
+
+    if (error) {
+      this.toastService.danger(error.message, error.code);
+      this.deleting = false;
+      return;
+    }
+
+    this.allSources = this.allSources.filter((source) => source.id !== id);
+    this.filteredSources = this.filteredSources.filter(
+      (source) => source.id !== id
+    );
+    this.deleting = false;
+    this.toastService.success('Foi deletado com sucesso!', 'Source removido!');
   }
 
-  private filter(value: string): SourceFirebaseKey[] {
+  private filter(value: string): SourceDatabaseKey[] {
     return this.allSources.filter(
       (source) =>
         source.name.toLowerCase().includes(value.toLowerCase()) ||
         source.plugin.includes(value.toLowerCase())
     );
-  }
-
-  ngOnDestroy(): void {
-    if (this.sourcesSubscription) {
-      this.sourcesSubscription.unsubscribe();
-    }
   }
 }

@@ -29,6 +29,7 @@
     "@angular/router": "~13.3.0",
     "@beast/eva-icons": "https://github.com/dadosfera/beast/releases/download/9.0.2/beast-eva-icons-9.0.2.tgz",
     "@beast/theme": "https://github.com/dadosfera/beast/releases/download/9.0.2/beast-theme-9.0.2.tgz",
+    "@supabase/supabase-js": "^1.35.2",
     "crypto-js": "^4.1.1",
     "eva-icons": "^1.1.2",
     "rxjs": "~7.5.0",

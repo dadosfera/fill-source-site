@@ -4,9 +4,52 @@
 
     <h1 class="h4 title-block">Fill Source</h1>
 
-    <button nbButton status="danger" (click)="loginWithGoogle()">
-      <nb-icon icon="google"></nb-icon>
-      Fazer login com Google
+    <div class="form-block">
+      <nb-form-field class="field-block">
+        <div class="label-block label">
+          <label>E-mail</label>
+        </div>
+        <input
+          nbInput
+          fullWidth
+          type="email"
+          [(ngModel)]="email"
+          fieldSize="large"
+        />
+      </nb-form-field>
+      <nb-form-field class="field-block">
+        <div class="label-block label">
+          <label>Senha</label>
+        </div>
+        <input
+          nbInput
+          fullWidth
+          type="password"
+          [(ngModel)]="password"
+          fieldSize="large"
+        />
+      </nb-form-field>
+    </div>
+
+    <button
+      nbButton
+      status="primary"
+      [disabled]="
+        email.trim().length === 0 || password.trim().length === 0 || loading
+      "
+      (click)="loginOrRegister()"
+      [nbSpinner]="loading"
+      fullWidth
+    >
+      {{ login ? 'Fazer login' : 'Fazer cadastro' }}
     </button>
+
+    <p class="label-block label action-login" (click)="toggleLogin()">
+      {{
+        login
+          ? 'Não possui conta? Faça seu cadastro'
+          : 'Já possui conta? Faça seu login'
+      }}
+    </p>
   </nb-card-body>
 </nb-card>

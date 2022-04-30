@@ -12,14 +12,13 @@ export interface Source {
   credentials: Credentials;
 }
 
-export interface SourceFirebase {
+export interface SourceDatabase {
   name: string;
   plugin: string;
   credentials: string;
-  uid: string;
-  favorited: boolean;
+  fk_profiles_sources: string;
 }
 
-export interface SourceFirebaseKey extends SourceFirebase {
-  key?: string | null;
+export interface SourceDatabaseKey extends SourceDatabase {
+  id: number;
 }

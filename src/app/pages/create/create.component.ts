@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NbToastrService } from '@beast/theme';
-import { AuthService } from 'src/app/services/auth/auth.service';
 import { EncryptService } from 'src/app/services/encrypt/encrypt.service';
-import { SourceFirebase } from 'src/app/services/sources/source.model';
+import { SourceDatabase } from 'src/app/services/sources/source.model';
 import { SourcesService } from 'src/app/services/sources/sources.service';
 
 @Component({
@@ -31,7 +30,6 @@ export class CreateComponent {
   constructor(
     private router: Router,
     private encryptService: EncryptService,
-    private auth: AuthService,
     private sourcesService: SourcesService,
     private toastService: NbToastrService
   ) {}
@@ -41,28 +39,26 @@ export class CreateComponent {
   }
 
   async onSubmit() {
-    try {
-      this.savingSource = true;
-      const credentials = this.form.get('credentials')?.value;
-      const encrypt = await this.encryptService.encrypt(credentials);
+    this.savingSource = true;
+    const credentials = this.form.get('credentials')?.value;
+    const encrypt = await this.encryptService.encrypt(credentials);
 
-      const formValue: SourceFirebase = {
-        ...this.form.value,
-        credentials: encrypt,
-        favorited: false,
-        uid: this.auth.user?.uid,
-      };
+    const formValue: SourceDatabase = {
+      ...this.form.value,
+      credentials: encrypt,
+    };
 
-      await this.sourcesService.store(formValue);
+    const { error } = await this.sourcesService.store(formValue);
 
-      this.toastService.success('Salvo com sucesso!', 'Salvo!');
-      this.form.reset();
-      this.goBack();
-    } catch (error) {
-      console.log(error);
-      this.toastService.danger('Ocorreu um erro ao salvar o dado!', 'Ops!');
-    } finally {
+    if (error) {
+      this.toastService.danger(error.message, error.code);
       this.savingSource = false;
+      return;
     }
+
+    this.savingSource = false;
+    this.toastService.success('Salvo com sucesso!', 'Salvo!');
+    this.form.reset();
+    this.goBack();
   }
 }
