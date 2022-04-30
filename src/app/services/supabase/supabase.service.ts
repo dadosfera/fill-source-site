@@ -16,6 +16,9 @@ import { environment } from '../../../environments/environment';
 import { SourceDatabase, SourceDatabaseKey } from '../sources/source.model';
 import { IUser } from './user.model';
 
+const REDIRECT_URL =
+  'https://sites.google.com/datasprints.com/datasprints-wiki/home';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -69,8 +72,7 @@ export class SupabaseService {
     return this.supabaseClient.auth.signIn(
       { email, password },
       {
-        redirectTo:
-          'https://sites.google.com/datasprints.com/datasprints-wiki/home',
+        redirectTo: REDIRECT_URL,
       }
     );
   }
@@ -89,8 +91,7 @@ export class SupabaseService {
     return this.supabaseClient.auth.signUp(
       { email, password },
       {
-        redirectTo:
-          'https://sites.google.com/datasprints.com/datasprints-wiki/home',
+        redirectTo: REDIRECT_URL,
       }
     );
   }

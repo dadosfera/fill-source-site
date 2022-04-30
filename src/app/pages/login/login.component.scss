@@ -14,9 +14,19 @@ nb-card-body {
   justify-content: center;
 }
 
+.header-block {
+  margin-bottom: 1.5rem;
+}
+
+.sub-header {
+  margin-bottom: 2rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
 .title-block {
   color: nb-theme(color-primary-500);
-  margin-bottom: 3rem;
+  margin-bottom: 0;
 }
 
 .icon-block {

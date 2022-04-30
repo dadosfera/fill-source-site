@@ -11,11 +11,25 @@ html {
   font-size: 14px;
 }
 
+html, body {
+  overflow-y: hidden;
+}
+
 body {
-  width: 400px;
-  height: 500px !important;
-  // max-height: 500px !important;
   margin: 0;
+}
+
+body,
+app-root,
+nb-layout,
+.scrollable-container,
+.layout,
+.layout-container,
+.content,
+.columns,
+nb-layout-column {
+  width: 400px;
+  height: 520px !important;
 }
 
 nb-layout-column {

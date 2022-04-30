@@ -97,6 +97,15 @@ export class HomeComponent implements OnInit {
     );
 
     chrome.tabs.query({ active: true, currentWindow: true }, ([{ id }]) => {
+      if (id) {
+        this.toastService.info(
+          'Os inputs encontrados serão preenchidos',
+          'Processando...',
+          {
+            duration: 3000,
+          }
+        );
+      }
       this.fillSources(id as number, decrypted);
     });
   }
@@ -121,7 +130,17 @@ export class HomeComponent implements OnInit {
                 KEY_TO_ID[key]
               ) as HTMLInputElement;
               if (input) {
+                const backgroundColor = input.style.backgroundColor;
+                const transition = input.style.transition;
+                input.style.backgroundColor = '#7CFC0040';
                 input.value = value as string;
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+                input.dispatchEvent(new Event('change', { bubbles: true }));
+                input.style.transition = 'all 1s';
+                setTimeout(() => {
+                  input.style.backgroundColor = backgroundColor;
+                  input.style.transition = transition;
+                }, 400);
               }
             }
           });

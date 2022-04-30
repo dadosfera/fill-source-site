@@ -94,8 +94,7 @@ export class LoginComponent {
     if (
       this.email.trim() &&
       this.password.trim() &&
-      (this.email.endsWith('dadosfera.ai') ||
-        this.email.endsWith('datasprints.com'))
+      this.email.endsWith('@dadosfera.ai')
     ) {
       if (this.login) {
         this.loginWithEmail();
