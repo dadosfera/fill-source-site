@@ -14,7 +14,7 @@ export class LoginComponent {
   password = '';
   loading = false;
 
-  login = false;
+  login = true;
 
   constructor(
     private toastService: NbToastrService,

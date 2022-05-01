@@ -9,6 +9,11 @@ export class DisplayNamePipe implements PipeTransform {
       return '';
     }
 
-    return value.split(' ')[0];
+    if (value.length <= 22) {
+      return value;
+    }
+
+    const truncated = value.substring(0, 22).concat('...');
+    return truncated;
   }
 }

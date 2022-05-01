@@ -56,7 +56,7 @@ export class SourceListItemComponent {
       chrome.tabs.query({ active: true, currentWindow: true }, ([{ id }]) => {
         if (id) {
           this.toastService.info(
-            'Os inputs encontrados serão preenchidos',
+            'Inputs encontrados serão preenchidos',
             'Processando...',
             {
               duration: 3000,
