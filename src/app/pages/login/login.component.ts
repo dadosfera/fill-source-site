@@ -76,6 +76,7 @@ export class LoginComponent implements OnInit {
       this.password = '';
       this.confirmPassword = '';
       this.loading = false;
+      this.view = 'home';
     }
   }
 }
