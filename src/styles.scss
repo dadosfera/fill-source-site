@@ -25,7 +25,6 @@ nb-layout,
 .scrollable-container,
 .layout,
 .layout-container,
-.content,
 .columns,
 nb-layout-column {
   width: 400px;
@@ -38,4 +37,36 @@ nb-layout-column {
 
 nb-card {
   margin-bottom: 0;
+}
+
+._bold {
+  font-weight: 700;
+}
+
+._no-margin {
+  margin: 0;
+}
+
+._flex {
+  display: flex;
+}
+
+._flex-column {
+  flex-direction: column;
+}
+
+._align-center {
+  align-items: center;
+}
+
+._justify-center {
+  justify-content: center;
+}
+
+.last-action {
+  padding-right: 0 !important;
+}
+
+nb-card-header {
+  padding: 1rem !important;
 }

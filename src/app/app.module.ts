@@ -33,6 +33,8 @@ import { EditComponent } from './pages/edit/edit.component';
 import { DisplayNamePipe } from './pipes/display-name/display-name.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CredentialsViewComponent } from './components/credentials-view/credentials-view.component';
+import { SourceListItemComponent } from './components/source-list-item/source-list-item.component';
+import { HelloUserComponent } from './components/hello-user/hello-user.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { CredentialsViewComponent } from './components/credentials-view/credenti
     EditComponent,
     DisplayNamePipe,
     CredentialsViewComponent,
+    SourceListItemComponent,
+    HelloUserComponent,
   ],
   imports: [
     BrowserModule,
