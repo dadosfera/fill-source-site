@@ -5,59 +5,61 @@
       <h1 class="h4 title-block">Fill Source</h1>
     </div>
 
-    <p class="sub-header">
-      {{ login ? 'Faça seu login' : 'Faça seu cadastro' }}
-    </p>
+    <ng-container *ngIf="view === 'magic'">
+      <p class="sub-header -bigger">Autenticação realizada!</p>
+    </ng-container>
 
-    <div class="form-block">
-      <nb-form-field class="field-block">
-        <div class="label-block label">
-          <label>E-mail</label>
-        </div>
-        <input
-          nbInput
-          fullWidth
-          type="email"
-          [(ngModel)]="email"
-          fieldSize="large"
-        />
-      </nb-form-field>
-      <nb-form-field class="field-block">
-        <div class="label-block label">
-          <label>Senha</label>
-        </div>
-        <input
-          nbInput
-          fullWidth
-          type="password"
-          [(ngModel)]="password"
-          fieldSize="large"
-        />
-      </nb-form-field>
-    </div>
+    <ng-container *ngIf="view === 'confirm'">
+      <p class="sub-header -bigger">Seu e-mail foi confirmado!</p>
+      <p class="sub-header">Já pode fazer login na extensão</p>
+    </ng-container>
 
-    <button
-      nbButton
-      status="primary"
-      [disabled]="
-        email.trim().length === 0 ||
-        password.trim().length === 0 ||
-        loading ||
-        !email.endsWith('@dadosfera.ai')
-      "
-      (click)="loginOrRegister()"
-      [nbSpinner]="loading"
-      fullWidth
-    >
-      {{ login ? 'Fazer login' : 'Fazer cadastro' }}
-    </button>
+    <ng-container *ngIf="view === 'password'">
+      <p class="sub-header">Digite sua nova senha</p>
 
-    <p class="label-block label action-login" (click)="toggleLogin()">
-      {{
-        login
-          ? 'Não possui conta? Faça seu cadastro'
-          : 'Já possui conta? Faça seu login'
-      }}
-    </p>
+      <div class="form-block">
+        <nb-form-field class="field-block">
+          <div class="label-block label">
+            <label>Senha</label>
+          </div>
+          <input
+            nbInput
+            fullWidth
+            type="password"
+            [(ngModel)]="password"
+            fieldSize="large"
+          />
+        </nb-form-field>
+
+        <nb-form-field class="field-block">
+          <div class="label-block label">
+            <label>Confirmar senha</label>
+          </div>
+          <input
+            nbInput
+            fullWidth
+            type="password"
+            [(ngModel)]="confirmPassword"
+            fieldSize="large"
+          />
+        </nb-form-field>
+      </div>
+
+      <button
+        nbButton
+        status="primary"
+        [disabled]="
+          password.trim().length < 6 ||
+          confirmPassword.trim().length < 6 ||
+          loading ||
+          password !== confirmPassword
+        "
+        [nbSpinner]="loading"
+        fullWidth
+        (click)="resetPassword()"
+      >
+        Resetar senha
+      </button>
+    </ng-container>
   </nb-card-body>
 </nb-card>

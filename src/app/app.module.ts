@@ -27,29 +27,10 @@ import {
 } from '@beast/theme';
 import { NbEvaIconsModule } from '@beast/eva-icons';
 import { LoginComponent } from './pages/login/login.component';
-import { HomeComponent } from './pages/home/home.component';
-import { CreateComponent } from './pages/create/create.component';
-import { EditComponent } from './pages/edit/edit.component';
-import { DisplayNamePipe } from './pipes/display-name/display-name.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CredentialsViewComponent } from './components/credentials-view/credentials-view.component';
-import { SourceListItemComponent } from './components/source-list-item/source-list-item.component';
-import { HelloUserComponent } from './components/hello-user/hello-user.component';
-import { NoDataComponent } from './components/no-data/no-data.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    HomeComponent,
-    CreateComponent,
-    EditComponent,
-    DisplayNamePipe,
-    CredentialsViewComponent,
-    SourceListItemComponent,
-    HelloUserComponent,
-    NoDataComponent,
-  ],
+  declarations: [AppComponent, LoginComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

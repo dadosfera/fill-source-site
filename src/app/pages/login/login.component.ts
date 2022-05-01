@@ -1,106 +1,81 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NbToastrService } from '@beast/theme';
 import { SupabaseService } from 'src/app/services/supabase/supabase.service';
-import { IUser } from 'src/app/services/supabase/user.model';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
-  email = '';
+export class LoginComponent implements OnInit {
   password = '';
+  confirmPassword = '';
   loading = false;
 
-  login = true;
+  view = 'home';
+
+  fragment = '';
 
   constructor(
     private toastService: NbToastrService,
     private supabaseService: SupabaseService,
-    private router: Router
+    private route: ActivatedRoute
   ) {}
 
-  async loginWithEmail() {
-    this.loading = true;
+  ngOnInit(): void {
+    this.route.fragment.subscribe((fragment) => {
+      if (fragment) {
+        this.fragment = fragment;
 
-    const { error, user } = await this.supabaseService.signIn({
-      email: this.email,
-      password: this.password,
+        if (fragment.includes('type=signup')) {
+          this.view = 'confirm';
+          return;
+        }
+
+        if (fragment.includes('type=recovery')) {
+          this.view = 'password';
+          return;
+        }
+
+        if (fragment.includes('type=magiclink')) {
+          this.view = 'magic';
+          return;
+        }
+      }
     });
+  }
 
-    if (error) {
-      this.toastService.danger('Ocorreu um erro ao fazer o login', 'Ops!');
-      this.loading = false;
-      return;
-    }
+  async resetPassword() {
+    if (
+      this.confirmPassword.trim().length > 5 &&
+      this.password.trim().length > 5 &&
+      this.confirmPassword === this.password
+    ) {
+      this.loading = true;
+      const splitted = this.fragment.split('&');
+      const accessString = splitted.find((i) => i.includes('access_token'));
+      const accessToken = accessString?.split('=')[1] as string;
 
-    if (user && !user.email_confirmed_at) {
-      this.toastService.danger('E-mail não confirmado', 'Ops!');
-      this.loading = false;
-      return;
-    }
+      const { error } = await this.supabaseService.resetPassword(
+        accessToken,
+        this.password.trim()
+      );
 
-    const profile = await this.supabaseService.getProfile();
-
-    if (profile.error || !profile.data?.hash) {
-      const username = user?.email?.split('@')[0];
-      const updated = await this.supabaseService.updateProfile({
-        username,
-      } as IUser);
-
-      if (updated.error) {
-        this.toastService.danger('Ocorreu um erro ao atualizar o hash', 'Ops!');
+      if (error) {
+        this.toastService.danger(error.message, error.status, {
+          duration: 5000,
+        });
         this.loading = false;
         return;
       }
-    }
 
-    this.loading = false;
-    this.router.navigate(['/home']);
-  }
-
-  async registerWithEmail() {
-    this.loading = true;
-
-    const { error } = await this.supabaseService.signUp({
-      email: this.email,
-      password: this.password,
-    });
-
-    if (error) {
-      this.toastService.danger(error.message, error.status);
-      this.loading = false;
-      return;
-    }
-
-    this.login = true;
-    this.loading = false;
-    this.toastService.success(
-      'Um e-mail de confirmação foi enviado',
-      'Sucesso!',
-      {
+      this.toastService.success('Senha resetada com sucesso!', 'Tudo certo!', {
         duration: 5000,
-      }
-    );
-  }
-
-  toggleLogin() {
-    this.login = !this.login;
-  }
-
-  loginOrRegister() {
-    if (
-      this.email.trim() &&
-      this.password.trim() &&
-      this.email.endsWith('@dadosfera.ai')
-    ) {
-      if (this.login) {
-        this.loginWithEmail();
-      } else {
-        this.registerWithEmail();
-      }
+      });
+      this.password = '';
+      this.confirmPassword = '';
+      this.loading = false;
     }
   }
 }

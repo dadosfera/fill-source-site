@@ -19,20 +19,11 @@ body {
   margin: 0;
 }
 
-body,
-app-root,
-nb-layout,
-.scrollable-container,
-.layout,
-.layout-container,
-.columns,
-nb-layout-column {
-  width: 400px;
-  height: 520px !important;
-}
-
 nb-layout-column {
   padding: 10px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 nb-card {

@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.supabaseService.authChanges((_, session) => {
       if (!session) {
-        this.router.navigate(['/login']);
+        this.router.navigate(['/']);
       }
     });
   }
