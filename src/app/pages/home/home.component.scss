@@ -29,30 +29,6 @@ nb-card-body {
   min-height: 60px;
 }
 
-.no-data-block {
-  margin: 4rem;
-  text-align: center;
-
-  >.h4 {
-    color: nb-theme(color-primary-500);
-  }
-
-  >.p1 {
-    width: 100%;
-    max-width: 550px;
-    margin: 1rem auto;
-  }
-}
-
-button {
-  margin-top: 10px;
-
-  &.-basic {
-    color: nb-theme(color-basic-700) !important;
-    margin-right: 16px;
-  }
-}
-
 nb-list-item {
   display: flex;
   flex-direction: column;

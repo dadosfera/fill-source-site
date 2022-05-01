@@ -46,7 +46,12 @@
   </div>
 
   <nb-card-body
-    *ngIf="filteredSources && filteredSources.length === 0 && !loading"
+    *ngIf="
+      filteredSources &&
+      filteredSources.length === 0 &&
+      !loading &&
+      allSources.length > 0
+    "
   >
     <div class="no-data-block">
       <p id="text" class="p1">Sem itens para o termo de busca</p>
@@ -54,23 +59,6 @@
   </nb-card-body>
 
   <nb-card-body *ngIf="allSources.length === 0 && !loading">
-    <div class="no-data-block">
-      <h1 id="title" class="h4">Lista vazia</h1>
-
-      <p id="text" class="p1">
-        Crie seu primeiro source para começar a economizar tempo
-      </p>
-
-      <button
-        nbButton
-        status="success"
-        size="large"
-        (click)="goToCreate()"
-        id="newItem"
-      >
-        <nb-icon icon="plus-circle"></nb-icon>
-        Criar novo source
-      </button>
-    </div>
+    <app-no-data></app-no-data>
   </nb-card-body>
 </nb-card>

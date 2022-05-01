@@ -35,6 +35,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CredentialsViewComponent } from './components/credentials-view/credentials-view.component';
 import { SourceListItemComponent } from './components/source-list-item/source-list-item.component';
 import { HelloUserComponent } from './components/hello-user/hello-user.component';
+import { NoDataComponent } from './components/no-data/no-data.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { HelloUserComponent } from './components/hello-user/hello-user.component
     CredentialsViewComponent,
     SourceListItemComponent,
     HelloUserComponent,
+    NoDataComponent,
   ],
   imports: [
     BrowserModule,
