@@ -19,13 +19,12 @@ on:
 
 jobs:
   deploy:
-  needs: [extract_environment, semantic_release]
-  runs-on: [self-hosted, 'dev']
-  steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+    runs-on: [self-hosted, 'dev']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Build Angular Project
-      shell: bash
-      run: |
-        npm i && npm run build:prod
+      - name: Build Angular Project
+        shell: bash
+        run: |
+          npm i && npm run build:prod
