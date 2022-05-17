@@ -1,0 +1,31 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      type:
+        description: 'Type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      environment:
+        description: 'Environment to run tests against'
+        type: environment
+        required: true
+
+jobs:
+  deploy:
+  needs: [extract_environment, semantic_release]
+  runs-on: [self-hosted, 'dev']
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Build Angular Project
+      shell: bash
+      run: |
+        npm i && npm run build:prod
